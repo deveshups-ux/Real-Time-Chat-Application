@@ -1,5 +1,7 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
+import toast from "react-hot-toast";
 
 const SignUp = () => {
   const [user, setUser] = useState({
@@ -10,13 +12,38 @@ const SignUp = () => {
     gender: "",
   });
 
-  const handleChechbox = (gender) => {
+  const navigate = useNavigate();
+  const handleCheckbox = (gender) => {
     setUser({ ...user, gender });
   };
 
-  const onSubmitHandler = (e) => {
+  const onSubmitHandler = async (e) => {
     e.preventDefault();
-    console.log(user);
+    try {
+      const res = await axios.post(
+        "http://localhost:8080/api/v1/user/register",
+        user,
+        {
+          headers: { "Content-Type": "application/json" },
+          withCredentials: true,
+        },
+      );
+      console.log(res);
+      if (res.data.success) {
+        navigate("/login");
+        toast.success(res.data.message);
+      }
+    } catch (error) {
+      toast.error(error.response.data.message);
+      console.log(error);
+    }
+    // setUser({
+    //   fullName: "",
+    //   username: "",
+    //   password: "",
+    //   confirmPassword: "",
+    //   gender: "",
+    // });
   };
   return (
     <div className="flex justify-center items-center  bg-base-200">
@@ -91,6 +118,8 @@ const SignUp = () => {
             <div className="flex gap-6">
               <label className="flex items-center gap-2 cursor-pointer">
                 <input
+                  checked={user.gender === "male"}
+                  onChange={() => handleCheckbox("male")}
                   type="radio"
                   name="gender"
                   className="radio radio-primary"
@@ -100,6 +129,8 @@ const SignUp = () => {
 
               <label className="flex items-center gap-2 cursor-pointer">
                 <input
+                  checked={user.gender === "female"}
+                  onChange={() => handleCheckbox("female")}
                   type="radio"
                   name="gender"
                   className="radio radio-primary"
