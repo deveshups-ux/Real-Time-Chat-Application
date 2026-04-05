@@ -16,7 +16,7 @@ export const register = async (req, res) => {
     }
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    const profilePic = "https://api.dicebear.com/9.x/thumbs/svg";
+    const profilePic = `https://i.pravatar.cc/150?img=${Math.floor(Math.random() * 70)}`;
 
     const newUser = await User.create({
       fullName,

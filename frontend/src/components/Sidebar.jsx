@@ -7,7 +7,6 @@ import toast from "react-hot-toast";
 
 const Sidebar = () => {
   const navigate = useNavigate();
-
   const logoutHandler = async () => {
     try {
       const res = await axios.get("http://localhost:8080/api/v1/user/logout");
