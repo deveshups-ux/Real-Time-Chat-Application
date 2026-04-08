@@ -26,7 +26,7 @@ export const sendMessage = async (req, res) => {
     await gotConversation.save();
 
     return res.status(200).json({
-      message: "message send succesfully",
+      newMessage,
     });
 
     // SOCKET IO
@@ -42,7 +42,10 @@ export const getMessage = async (req, res) => {
     const conversation = await Conversation.findOne({
       participants: { $all: [senderId, receiverId] },
     }).populate("messages");
-    return res.status(200).json(conversation?.messages);
+    if (!conversation) {
+      return res.status(200).json([]); 
+    }
+    return res.status(200).json(conversation.messages || []);
   } catch (error) {
     console.log(error);
   }
