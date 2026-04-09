@@ -5,6 +5,7 @@ import userRoute from "./routes/userRouter.js";
 import messageRoute from "./routes/messageRouter.js";
 import cookieParser from "cookie-parser";
 import cors from "cors";
+import { server } from "./socket/socket.js";
 
 dotenv.config({});
 const app = express();
@@ -23,5 +24,5 @@ app.use("/api/v1/user", userRoute);
 app.use("/api/v1/message", messageRoute);
 
 connectDB().then(() => {
-  app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+  server.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 });
