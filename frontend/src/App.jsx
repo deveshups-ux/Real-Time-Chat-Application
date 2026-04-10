@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react"; // ✅ useState हटाओ
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Login from "./components/Login";
 import HomePage from "./components/HomePage";
 import Signup from "./components/signUp";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import io from "socket.io-client";
+import { setOnlineUsers } from "./redux/userSlice";
+import { setSocket } from "./redux/socketSlice"; // ✅ यह import add करो
 
 const router = createBrowserRouter([
   { path: "/", element: <HomePage /> },
@@ -14,21 +16,35 @@ const router = createBrowserRouter([
 
 const App = () => {
   const { authUser } = useSelector((store) => store.user);
-  const [socket, setSocket] = useState(null);
+  const { socket } = useSelector((store) => store.socket); // ✅ store.socket से लो
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    const socket = io("http://localhost:8080");
+    if (authUser) {
+      const newSocket = io("http://localhost:8080", {
+        // ✅ newSocket नाम दो
+        query: {
+          userId: authUser._id,
+        },
+      });
 
-    socket.on("connect", () => {
-      console.log("✅ Socket connected! ID:", socket.id);
-    });
+      dispatch(setSocket(newSocket)); // ✅ Redux में save करो
 
-    socket.on("connect_error", (err) => {
-      console.log("❌ Connection failed:", err.message);
-    });
+      newSocket.on("getOnlineUsers", (onlineUsers) => {
+        dispatch(setOnlineUsers(onlineUsers)); // ✅ onlineUsers Redux में
+      });
 
-    return () => socket.disconnect();
-  }, []);
+      return () => {
+        newSocket.close();
+        dispatch(setSocket(null)); // ✅ cleanup पर null करो
+      };
+    } else {
+      if (socket) {
+        socket.close();
+        dispatch(setSocket(null));
+      }
+    }
+  }, [authUser]); // ✅ authUser dependency add करो
 
   return (
     <div className="app p-4 flex items-center h-screen justify-center">

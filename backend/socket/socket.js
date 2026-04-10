@@ -4,7 +4,7 @@ import express from "express";
 
 const app = express();
 const server = http.createServer(app);
-// Configure CORS if your frontend is on a different port/domain
+
 const io = new Server(server, {
   cors: {
     origin: ["http://localhost:5173"],
@@ -12,11 +12,22 @@ const io = new Server(server, {
   },
 });
 
+const userSocketMap = {};
+
 io.on("connection", (socket) => {
   console.log("✅ User connected:", socket.id);
 
+  const userId = socket.handshake.query.userId;
+  if (userId !== undefined) {
+    userSocketMap[userId] = socket.id;
+  }
+
+  io.emit("getOnlineUsers", Object.keys(userSocketMap)); // sabhi ko bheja
+
   socket.on("disconnect", () => {
     console.log("❌ User disconnected:", socket.id);
+    delete userSocketMap[userId];
+    io.emit("getOnlineUsers", Object.keys(userSocketMap)); // sabhi ko bheeja
   });
 });
 
