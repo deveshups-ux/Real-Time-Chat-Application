@@ -28,7 +28,11 @@ const Message = (props) => {
         <div className="chat-header">
           <time className="text-xs opacity-50">12:46</time>
         </div>
-        <div className="chat-bubble">{message?.message}</div>
+        <div
+          className={`chat-bubble  ${authUser?._id !== message?.senderId ? "bg-gray-200 text-black" : ""} `}
+        >
+          {message?.message}
+        </div>
       </div>
     </div>
   );
