@@ -7,9 +7,9 @@ import { setSelectedUser } from "../redux/userSlice";
 const MessageContainer = () => {
   const dispatch = useDispatch();
   const { selectedUser, authUser } = useSelector((store) => store.user);
-  useEffect(() => {
-    return () => dispatch(setSelectedUser(null));
-  }, [dispatch]);
+  // useEffect(() => {
+  //   return () => dispatch(setSelectedUser(null));
+  // }, [dispatch]);
 
   return (
     <>
