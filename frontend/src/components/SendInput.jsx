@@ -13,16 +13,13 @@ const SendInput = () => {
     e.preventDefault();
     try {
       const res = await axios.post(
-        `http://localhost:8080/api/v1/message/send/${selectedUser?._id}`,
+        `/api/v1/message/send/${selectedUser?._id}`,
         { message },
         { withCredentials: true },
       );
-      console.log(res);
       dispatch(setMessages([...messages, res?.data?.newMessage]));
       setMessage("");
-    } catch (error) {
-      console.log(error);
-    }
+    } catch (error) {}
   };
   return (
     <form onSubmit={onSubmitHandler} className="px-4 my-3">

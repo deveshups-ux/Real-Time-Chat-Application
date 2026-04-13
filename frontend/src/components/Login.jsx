@@ -15,20 +15,14 @@ const Login = () => {
   const onSubmitHandler = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post(
-        "http://localhost:8080/api/v1/user/login",
-        user,
-        {
-          headers: { "Content-Type": "application/json" },
-          withCredentials: true,
-        },
-      );
-      console.log(res);
+      const res = await axios.post("/api/v1/user/login", user, {
+        headers: { "Content-Type": "application/json" },
+        withCredentials: true,
+      });
       navigate("/");
       dispatch(setAuthUser(res.data));
     } catch (error) {
       toast.error(error.response.data.message);
-      console.log(error);
     }
   };
   return (

@@ -16,27 +16,25 @@ const router = createBrowserRouter([
 
 const App = () => {
   const { authUser } = useSelector((store) => store.user);
-  const { socket } = useSelector((store) => store.socket); // ✅ store.socket से लो
+  const { socket } = useSelector((store) => store.socket);
   const dispatch = useDispatch();
 
   useEffect(() => {
     if (authUser) {
-      const newSocket = io("http://localhost:8080", {
-        // ✅ newSocket नाम दो
+      const newSocket = io(window.location.origin, {
         query: {
           userId: authUser._id,
         },
       });
 
-      dispatch(setSocket(newSocket)); // ✅ Redux में save करो
-
+      dispatch(setSocket(newSocket));
       newSocket.on("getOnlineUsers", (onlineUsers) => {
-        dispatch(setOnlineUsers(onlineUsers)); // ✅ onlineUsers Redux में
+        dispatch(setOnlineUsers(onlineUsers));
       });
 
       return () => {
         newSocket.close();
-        dispatch(setSocket(null)); // ✅ cleanup पर null करो
+        dispatch(setSocket(null));
       };
     } else {
       if (socket) {
@@ -44,7 +42,7 @@ const App = () => {
         dispatch(setSocket(null));
       }
     }
-  }, [authUser]); // ✅ authUser dependency add करो
+  }, [authUser]);
 
   return (
     <div className="app p-4 flex items-center h-screen justify-center">

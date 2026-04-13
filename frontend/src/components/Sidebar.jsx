@@ -14,14 +14,11 @@ const Sidebar = () => {
   const { otherUser } = useSelector((store) => store.user);
   const logoutHandler = async () => {
     try {
-      const res = await axios.get("http://localhost:8080/api/v1/user/logout");
-      console.log(res);
+      const res = await axios.get("/api/v1/user/logout");
       navigate("/login");
       dispatch(setAuthUser(null));
       toast.success(res.data.message);
-    } catch (error) {
-      console.log(error);
-    }
+    } catch (error) {}
   };
   const searchSubmitHandler = (e) => {
     e.preventDefault();
