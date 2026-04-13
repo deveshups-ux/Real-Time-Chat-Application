@@ -8,13 +8,13 @@ import cors from "cors";
 import { app, server } from "./socket/socket.js";
 import path from "path";
 
-const _dirname = path.resolve();
+const __dirname = path.resolve();
 
 dotenv.config({});
 
 app.use(
   cors({
-    origin: process.env.CLIENT_URL || "http://localhost:5173",
+    origin: process.env.CLIENT_URL,
     credentials: true,
   }),
 );
@@ -27,9 +27,9 @@ const PORT = process.env.PORT || 8080;
 app.use("/api/v1/user", userRoute);
 app.use("/api/v1/message", messageRoute);
 
-app.use(express.static(path.join(_dirname, "/frontend/dist")));
+app.use(express.static(path.join(__dirname, "/frontend/dist")));
 app.get("*splat", (_, res) => {
-  res.sendFile(path.resolve(_dirname, "frontend", "dist", "index.html"));
+  res.sendFile(path.resolve(__dirname, "frontend", "dist", "index.html"));
 });
 
 connectDB().then(() => {

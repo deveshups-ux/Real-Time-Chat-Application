@@ -15,10 +15,14 @@ const Login = () => {
   const onSubmitHandler = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post("/api/v1/user/login", user, {
-        headers: { "Content-Type": "application/json" },
-        withCredentials: true,
-      });
+      const res = await axios.post(
+        "https://real-time-chat-application-2-g8ge.onrender.com/api/v1/user/login",
+        user,
+        {
+          headers: { "Content-Type": "application/json" },
+          withCredentials: true,
+        },
+      );
       navigate("/");
       dispatch(setAuthUser(res.data));
     } catch (error) {

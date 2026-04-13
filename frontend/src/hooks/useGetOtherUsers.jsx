@@ -9,10 +9,11 @@ const useGetOtherUsers = () => {
     const fetchOtherUsers = async () => {
       try {
         axios.defaults.withCredentials = true;
-        const res = await axios.get("/api/v1/user/");
+        const res = await axios.get(
+          "https://real-time-chat-application-2-g8ge.onrender.com/api/v1/user/",
+        );
         dispatch(setOtherUser(res.data));
-      } catch (error) {
-      }
+      } catch (error) {}
     };
     fetchOtherUsers();
   }, []);

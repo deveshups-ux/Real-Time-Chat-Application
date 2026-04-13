@@ -14,7 +14,9 @@ const Sidebar = () => {
   const { otherUser } = useSelector((store) => store.user);
   const logoutHandler = async () => {
     try {
-      const res = await axios.get("/api/v1/user/logout");
+      const res = await axios.get(
+        "https://real-time-chat-application-2-g8ge.onrender.com/api/v1/user/logout",
+      );
       navigate("/login");
       dispatch(setAuthUser(null));
       toast.success(res.data.message);

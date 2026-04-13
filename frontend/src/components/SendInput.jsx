@@ -13,7 +13,7 @@ const SendInput = () => {
     e.preventDefault();
     try {
       const res = await axios.post(
-        `/api/v1/message/send/${selectedUser?._id}`,
+        `https://real-time-chat-application-2-g8ge.onrender.com/api/v1/message/send/${selectedUser?._id}`,
         { message },
         { withCredentials: true },
       );
