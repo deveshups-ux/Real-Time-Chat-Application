@@ -19,7 +19,6 @@ export const getReceiverSocketId = (receiverId) => {
 const userSocketMap = {};
 
 io.on("connection", (socket) => {
-  console.log("✅ User connected:", socket.id);
 
   const userId = socket.handshake.query.userId;
   if (userId !== undefined) {
@@ -29,7 +28,6 @@ io.on("connection", (socket) => {
   io.emit("getOnlineUsers", Object.keys(userSocketMap)); // sabhi ko bheja
 
   socket.on("disconnect", () => {
-    console.log("❌ User disconnected:", socket.id);
     delete userSocketMap[userId];
     io.emit("getOnlineUsers", Object.keys(userSocketMap)); // sabhi ko bheeja
   });

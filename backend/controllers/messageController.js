@@ -37,7 +37,6 @@ export const sendMessage = async (req, res) => {
 
     return res.status(200).json({ newMessage });
   } catch (error) {
-    console.log(error);
   }
 };
 
@@ -56,6 +55,5 @@ export const getMessage = async (req, res) => {
 
     return res.status(200).json(conversation.messages || []);
   } catch (error) {
-    console.log(error);
   }
 };

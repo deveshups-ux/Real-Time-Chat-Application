@@ -1,23 +1,116 @@
-📘 REDUX TOOLKIT – STEPWISE CONCLUSION NOTES
-Redux centralized state management library है, जो पूरे app का data store में रखता है।
-Store = Single source of truth, सभी slices का data यहीं रहता है।
-Slice = Store का logical part जिसमें state + reducers grouped रहते हैं।
-State = App का actual data, जैसे authUser, cartItems, products।
-Initial State हमेशा define करनी चाहिए, ताकि reducer properly काम करे।
-Action = Instruction कि state के साथ क्या करना है, इसमें optional payload होता है।
-Payload = Reducer को भेजा गया data, जो state update करने में use होता है।
-Reducer = Pure function जो action type check करके state update करता है।
-Dispatch = Action को reducer तक भेजने का तरीका।
-useSelector = React hook, store से updated state component में access करने के लिए।
-Component से dispatch(action) → action object बनता है → reducer state update करता है।
-Reducer update होने के बाद store में state save हो जाता है।
-UI automatically updated state से render होता है।
-Provider = Store को React app में wrap करता है, बिना Provider store inaccessible रहेगा।
-Login Flow Example:
-dispatch(setAuthUser(data)) → payload reducer तक जाता है → store update → UI show।
-Logout Flow Example:
-dispatch(logoutUser()) → reducer authUser null करता है → store update → UI refresh।
-Reducer Naming Convention: setSomething, addSomething, removeSomething, updateSomething, clearSomething।
-Redux Toolkit automatically action creators और payload handle करता है, जिससे boilerplate कम हो जाता है।
-Redux Flow Summary: Component → Dispatch → Action → Reducer → Store → UI Render।
-Redux use करने से app का data predictable, centralized और globally accessible बन जाता है।
+# ChatApp 💬
+
+A real-time chat application built with the MERN stack. Users can create accounts, find other users, and have live conversations — messages appear instantly without any page refresh.
+
+Built this as a hands-on project to learn Socket.io and how real-time communication works under the hood.
+
+---
+
+## Tech Stack
+
+**Frontend** — React, Tailwind CSS, DaisyUI, Redux Toolkit, Axios, React Router v6
+
+**Backend** — Node.js, Express.js, MongoDB, Mongoose, Socket.io, JWT, Bcrypt.js
+
+---
+
+## Features
+
+- Signup / Login with JWT-based authentication
+- Passwords hashed with bcrypt before storing
+- Auto-generated avatars for user profiles
+- Search and find other registered users
+- Real-time messaging powered by Socket.io
+- Redux store persisted across page refreshes
+- Clean glassmorphism UI built with Tailwind + DaisyUI
+
+---
+
+## Folder Structure
+
+```
+├── backend
+│   ├── config          # MongoDB connection
+│   ├── models          # Mongoose schemas (User, Message)
+│   ├── controllers     # Route logic
+│   ├── routes          # API endpoints
+│   ├── middleware      # JWT auth middleware
+│   └── index.js
+│
+└── frontend
+    ├── src
+    │   ├── components
+    │   ├── pages
+    │   ├── hooks       # useGetOtherUsers, useGetMessages
+    │   ├── redux       # store + slices
+    │   └── App.jsx
+```
+
+---
+
+## Getting Started
+
+```bash
+git clone https://github.com/deveshups-ux/Real-Time-Chat-Application.git
+cd Real-Time-Chat-Application
+```
+
+**Backend setup**
+
+```bash
+cd backend
+npm install
+```
+
+Create a `.env` file inside the `backend` folder and add your MongoDB URI, JWT secret, and port. Refer to `.env.example` if available.
+
+```bash
+npm run dev
+```
+
+**Frontend setup**
+
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+App runs on `http://localhost:5173` by default.
+
+---
+
+## API Overview
+
+```
+POST   /api/auth/signup
+POST   /api/auth/login
+POST   /api/auth/logout
+
+GET    /api/users              → get all users except self  (protected)
+
+POST   /api/message/send/:id   → send a message
+GET    /api/message/:id        → fetch conversation
+```
+
+All protected routes require a valid JWT token sent via cookies.
+
+---
+
+## Screenshots
+
+_Coming soon_
+
+---
+
+## Acknowledgements
+
+- [DaisyUI](https://daisyui.com) for the component library
+- [Avatar Placeholder API](https://avatar.iran.liara.run) for profile images
+
+---
+
+Made by **Devesh Tiwari** &nbsp;·&nbsp; March – April 2026
+
+[![GitHub](https://img.shields.io/badge/GitHub-deveshups--ux-181717?style=flat&logo=github)](https://github.com/deveshups-ux)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-Devesh%20Tiwari-0077B5?style=flat&logo=linkedin)](https://www.linkedin.com/in/devesh-tiwari-642b03374)
