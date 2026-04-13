@@ -1,4 +1,4 @@
-import React, { useEffect } from "react"; // ✅ useState हटाओ
+import React, { useEffect } from "react"; 
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Login from "./components/Login";
 import HomePage from "./components/HomePage";
@@ -6,7 +6,7 @@ import Signup from "./components/Signup";
 import { useDispatch, useSelector } from "react-redux";
 import io from "socket.io-client";
 import { setOnlineUsers } from "./redux/userSlice";
-import { setSocket } from "./redux/socketSlice"; // ✅ यह import add करो
+import { setSocket } from "./redux/socketSlice";
 
 const router = createBrowserRouter([
   { path: "/", element: <HomePage /> },
