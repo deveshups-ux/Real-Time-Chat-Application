@@ -2,7 +2,7 @@ import React, { useEffect } from "react"; // ✅ useState हटाओ
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Login from "./components/Login";
 import HomePage from "./components/HomePage";
-import Signup from "./components/signUp";
+import Signup from "./components/Signup";
 import { useDispatch, useSelector } from "react-redux";
 import io from "socket.io-client";
 import { setOnlineUsers } from "./redux/userSlice";
